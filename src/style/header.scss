@@ -1,6 +1,35 @@
 @import './colors.scss';
 
 
-header {
-  width: 100%;
+header{
+  .head {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    background-color: $secondary;
+    h2 {
+      color: $main;
+    }
+    button {
+      background-color: rgba(0, 0, 0, 0);
+      border-width: 0;
+      display: flex; flex-direction: column;
+      justify-content: center;
+      a {
+        color: $main;
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
+      }
+    }
+  }
+  .custom-shape-divider-top {
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    path {
+      fill: $secondary;
+    }
+  }
 }
