@@ -4,7 +4,7 @@ body {
 
 .Main {
   position: absolute;
-  top: 50%;
+  top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
 
@@ -12,9 +12,6 @@ body {
   flex-direction: column;
   justify-content: space-around;
 
-  min-width: 200px;
-  min-height: 100px;
-
-  border-radius: 10%;
+  border-radius: 10px;
   background: $secondary;
 }

@@ -1,0 +1,17 @@
+footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  .Player {
+    height: 72px;
+    background-color: $secondary;
+  }
+}
+
+.List {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}

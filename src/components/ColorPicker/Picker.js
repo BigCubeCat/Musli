@@ -26,7 +26,6 @@ export default function Picker() {
   const [countSelected, setCountSelected] = React.useState(0);
 
   const setColor = (index) => {
-    console.log(index)
     if (countSelected === 2) {
       const newColors = BUTTON_COLORS.map((_, i) => {
         return index === i
@@ -39,7 +38,6 @@ export default function Picker() {
     const newColors = [];
     for (let i in colors) {
       if (index == i) {
-        console.log('here')
         newColors.push(!colors[i]);
       } else {
         newColors.push(colors[i]);
