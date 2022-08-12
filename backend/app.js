@@ -43,12 +43,18 @@ app.use(function(err, req, res, next) {
 
 var Stream = require('stream');
 var stream = new Stream();
+var updateRatings = require('./updateRating');
 
 stream.pipe = function() {
-  const updateRatings = () => {
-    setTimeout(updateRatings, 1000 * process.env.UPDATE_DELAY);
+  const updateRatingsFunc = () => {
+    try {
+      updateRatings();
+    } catch (error) {
+      console.error(error)
+    }
+    setTimeout(updateRatingsFunc, 1000 * process.env.UPDATE_DELAY);
   }
-  updateRatings();
+  updateRatingsFunc();
 };
 
 stream.pipe();
