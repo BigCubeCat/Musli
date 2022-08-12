@@ -1,6 +1,8 @@
 const express = require('express')
 const Song = require('../models/Song')
+const Rate = require('../models/Rate')
 const auth = require('../middleware/auth')
+const { request, response } = require('express')
 
 const router = express.Router()
 
@@ -45,6 +47,34 @@ router.delete("/", auth, async (request, response) => {
       name: { $regex: '.*' + name + '.*' } // "LIKE"
     });
     response.send({ status: 'ok' })
+  } catch (error) {
+    response.status(500).send(error);
+  }
+})
+
+router.post('/rate', auth, async (request, response) => {
+  try {
+    const user = request.user;
+    const { song_id, rate } = request.body;
+    const oldRate = await Rate.findOne({
+      user: user.email, song: song_id
+    }).exec();
+    if (oldRate !== null) {
+      Rate.updateOne({
+        user: user.email, song: song_id
+      },
+        {
+          rate: rate
+        }).exec();
+      response.send({ status: 'ok' })
+    } else {
+      const rate = new Rate({
+        user: user.email, song: song_id,
+        rate: rate
+      });
+      await rate.save();
+      response.send({ status: 'ok' });
+    }
   } catch (error) {
     response.status(500).send(error);
   }
