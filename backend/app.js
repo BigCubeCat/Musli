@@ -40,4 +40,17 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+
+var Stream = require('stream');
+var stream = new Stream();
+
+stream.pipe = function() {
+  const updateRatings = () => {
+    setTimeout(updateRatings, 1000 * process.env.UPDATE_DELAY);
+  }
+  updateRatings();
+};
+
+stream.pipe();
+
 module.exports = app;

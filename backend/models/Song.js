@@ -20,7 +20,10 @@ const songSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  rates: [Number]
+  rates: {
+    type: [Number],
+    default: [0, 0, 0, 0, 0, 0, 0, 0],
+  }
 })
 const Song = mongoose.model('Song', songSchema);
 

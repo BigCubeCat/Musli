@@ -53,9 +53,14 @@ router.delete("/", auth, async (request, response) => {
 })
 
 router.post('/rate', auth, async (request, response) => {
+  // TODO: update rates
   try {
     const user = request.user;
     const { song_id, rate } = request.body;
+    const song = await Song.findById(song_id).exec();
+
+    const indexes = [+rate[0], +rate[1]]
+
     const oldRate = await Rate.findOne({
       user: user.email, song: song_id
     }).exec();
@@ -66,16 +71,40 @@ router.post('/rate', auth, async (request, response) => {
         {
           rate: rate
         }).exec();
+      const oldIndexes = [+oldRate.rate[0], +oldRate.rate[1]];
+      const newRates = song.rates.map((r, i) => {
+        if (indexes.includes(i)) {
+          if (!oldIndexes.includes(i)) {
+            return r + 1;
+          }
+          return r;
+        }
+        if (oldIndexes.includes(i)) {
+          return r - 1;
+        }
+        return r;
+      })
+
+      Song.updateOne({ _id: song_id }, { rates: newRates }).exec()
       response.send({ status: 'ok' })
     } else {
-      const rate = new Rate({
+      const dbRate = new Rate({
         user: user.email, song: song_id,
         rate: rate
       });
-      await rate.save();
+      await dbRate.save();
+
+      const newRates = song.rates.map((r, i) => {
+        if (indexes.includes(i)) {
+          return r + 1;
+        }
+        return r;
+      })
+      Song.updateOne({ _id: song_id }, { rates: newRates }).exec()
       response.send({ status: 'ok' });
     }
   } catch (error) {
+    console.error(error)
     response.status(500).send(error);
   }
 })
