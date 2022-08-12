@@ -4,7 +4,7 @@ const auth = require('../middleware/auth')
 
 const router = express.Router()
 
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
   // Create a new user
   try {
     const song = new Song(req.body)
@@ -18,10 +18,10 @@ router.post('/', async (req, res) => {
 router.get('/name', async (req, res) => {
   // Log user out of the application
   try {
-    const song = await Song.findOne({
+    const songs = await Song.find({
       name: { $regex: '.*' + req.body.name + '.*' } // "LIKE"
     }).exec();
-    res.send({ song })
+    res.send({ songs })
   } catch (error) {
     res.status(500).send(error)
   }
@@ -33,6 +33,18 @@ router.get('/combination', async (request, response) => {
     const songs = await Song.find({ combination: combination })
       .skip(limit * page).limit(limit).exec();
     response.send({ songs });
+  } catch (error) {
+    response.status(500).send(error);
+  }
+})
+
+router.delete("/", auth, async (request, response) => {
+  try {
+    const { name } = request.body;
+    Song.findOneAndRemove({
+      name: { $regex: '.*' + name + '.*' } // "LIKE"
+    });
+    response.send({ status: 'ok' })
   } catch (error) {
     response.status(500).send(error);
   }
