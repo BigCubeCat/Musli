@@ -1,15 +1,11 @@
-const Sequelize = require("sequelize");
+const mongoose = require('mongoose')
 
-const db = new Sequelize('db', 'user', 'password', {
-  host: "localhost",
-  dialect: 'mysql',
-})
-
-try {
-  db.authenticate();
-  console.log('Connection has been established successfully.');
-} catch (error) {
-  console.error('Unable to connect to the database:', error);
+function connect(uri = "") {
+  mongoose.connect(uri, {
+    useNewUrlParser: true,
+  })
 }
 
-module.exports = db;
+module.exports = {
+  connect
+};

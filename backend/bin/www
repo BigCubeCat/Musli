@@ -1,18 +1,30 @@
-#!/usr/bin/env node
+#!/usr/bin/process.env.node
 
 /**
  * Module dependencies.
  */
 
-var app = require('../app');
-var debug = require('debug')('backend:server');
-var http = require('http');
+const app = require('../app');
+const debug = require('debug')('userapi:server');
+const http = require('http');
 
 /**
- * Get port from environment and store in Express.
+ * Read .env
+ */
+require("../const");
+
+/**
+ * Setup DB
+ */
+const db = require('../db/db');
+console.log(`mongodb://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@${process.env.MONGODB_URL}/db`)
+db.connect(`mongodb://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@${process.env.MONGODB_URL}/db`)
+
+/**
+ * Get port from process.env.ronment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 /**
