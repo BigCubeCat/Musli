@@ -12,10 +12,23 @@ footer {
   }
   .Progress {
     width: 100%;
-    height: 15px;
+    height: 20px;
     background-color: $dark-submain;
     .Value {
-      color: $main;
+      height: 20px;
+      background-color: $main;
+    }
+    .Time {
+      position: relative;
+      top: -20px;
+      left: 0;
+      opacity: 0;
+     }
+    .Time:hover {
+      margin-left: 10px;
+      font-size: 17px;
+      color: $secondary;
+      opacity: 1;
     }
   }
 }
@@ -47,7 +60,7 @@ footer {
   width: 100%;
   height: 20px;
   border-radius: 10px;  
-  background: $sub-main;
+  background: $dark-submain;
   outline: none;
   opacity: 1;
   -webkit-transition: .2s;

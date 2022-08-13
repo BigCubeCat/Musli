@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Progress from './Progress';
 
 const useAudio = url => {
   const [audio] = useState(new Audio(url));
@@ -6,6 +7,12 @@ const useAudio = url => {
 
   const toggle = () => setPlaying(!playing);
   const setVolume = (volume) => { audio.volume = volume }
+  const setTime = percent => {
+    const time = percent / 100 * audio.duration;
+    audio.currentTime = time;
+    return time;
+  }
+  const getTime = () => audio.currentTime;
 
   useEffect(() => {
     playing ? audio.play() : audio.pause();
@@ -20,21 +27,29 @@ const useAudio = url => {
     };
   }, []);
 
-  return [playing, toggle, setVolume];
+  return [playing, toggle, setVolume, setTime, audio];
 };
 
 
-export default function Player() {
-  const [playing, toggle, setVolume] = useAudio("https://datashat.net/music_for_programming_1-datassette.mp3");
+export default function Player({ url = "http://127.0.0.1:8080/tr.mp3" }) {
+  const [playing, toggle, setVolume, setTime, audio] = useAudio(url);
   const [volume, setWidgetVolume] = useState(100);
+  const [timePercent, setTimePercent] = useState(90);
 
   const onVolumeChange = newValue => {
     setVolume(newValue / 100);
     setWidgetVolume(newValue);
   }
+  /**
+  текущая точка воспроизведения
+  */
+  const setCurrentTime = (percent) => {
+    setTimePercent(percent);
+    setTime(percent)
+  }
   return (
     <footer>
-      <div className="Progress"></div>
+      <Progress setCurrentTime={setCurrentTime} timePercent={timePercent} audio={audio} />
       <div className="Player Song">
         <div className="Controls">
           <button><img src="/icons/previous.svg" /></button>
@@ -59,6 +74,6 @@ export default function Player() {
           />
         </div>
       </div>
-    </footer>
+    </footer >
   )
 }
