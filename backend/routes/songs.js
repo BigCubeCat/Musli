@@ -29,9 +29,9 @@ router.get('/name', async (req, res) => {
   }
 })
 
-router.get('/combination', async (request, response) => {
+router.get('/combination/:combination/:page/:limit', async (request, response) => {
   try {
-    const { limit, page, combination } = request.body;
+    const { limit, page, combination } = request.params;
     const songs = await Song.find({ combination: combination })
       .skip(limit * page).limit(limit).exec();
     response.send({ songs });

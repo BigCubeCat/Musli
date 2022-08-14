@@ -1,8 +1,10 @@
 import React from "react";
 import Row from './Row';
 
-const loadData = (limit = 10, page = 1) => {
-  return fetch(`https://jsonplaceholder.typicode.com/posts?_limit=${limit}&page=${page}`)
+const loadData = async (combination = '01', limit = 10, page = 0) => {
+  return fetch(
+    `http://127.0.0.1:5000/songs/combination/${combination}/${page}/${limit}`
+  )
     .then(res => res.json()).
     then(json => json)
     .catch(console.error);
@@ -16,15 +18,14 @@ export default function Playlist() {
   React.useEffect(() => {
     const fetchRequest = async () => {
       const newData = await loadData()
-      console.log('here')
       console.log(newData)
-      setMusicList(newData)
+      setMusicList(newData.songs)
     }
     fetchRequest().catch(console.error)
   }, [])
   return (
     <div className="List">
-      {musicList.map(song => <Row key={song.id} song={song} />)}
+      {(musicList) && musicList.map(song => <Row key={song.id} song={song} />)}
     </div>
   )
 }

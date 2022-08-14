@@ -12,7 +12,6 @@ const useAudio = url => {
     audio.currentTime = time;
     return time;
   }
-  const getTime = () => audio.currentTime;
 
   useEffect(() => {
     playing ? audio.play() : audio.pause();
@@ -61,7 +60,7 @@ export default function Player({ url = "http://127.0.0.1:5000/tr.mp3" }) {
         </div>
         <div className="SongInfo">
           <div>Название</div>
-          <text>Автор</text>
+          <div className="Text">Автор</div>
         </div>
         <div />
         <div />

@@ -1,17 +1,7 @@
 import React from "react";
 import { useDispatch } from 'react-redux';
 import { setCombination } from '../../state/audio';
-
-export const BUTTON_COLORS = [  // Основанно на тесте Люшера
-  '#f22f23',
-  '#1e9773',
-  '#004984',
-  '#f2de00',
-  '#231f21',
-  '#99938f',
-  '#d32481',
-  '#c65223',
-];
+import { BUTTON_COLORS } from './COLORS';
 
 const ColorButton = ({ color, index, onClick, selected }) => {
   return <div className="buttonContainer">

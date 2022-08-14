@@ -1,12 +1,16 @@
 import React from "react";
+import Rate from '../ColorPicker/Rate';
 
 export default function Row({ song }) {
   return (
     <div key={song.id} className="Song">
-      <div className="Controls">
-        <button><img src="/icons/previous.svg" /></button>
-        <button><img src="/icons/pause.svg" /></button>
-        <button><img src="/icons/next.svg" /></button>
+      <div className="SongInfo">
+        <div>{song.name}</div>
+        <div className="Text">{song.author}</div>
+      </div>
+      <div>
+        <Rate combination={song.combination} />
+        {/* TODO: Оценка */}
       </div>
     </div>
   )
