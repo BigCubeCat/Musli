@@ -1,4 +1,6 @@
 import React from "react";
+import { useDispatch } from 'react-redux';
+import { setCombination } from '../../state/audio';
 
 export const BUTTON_COLORS = [  // Основанно на тесте Люшера
   '#f22f23',
@@ -22,6 +24,7 @@ const ColorButton = ({ color, index, onClick, selected }) => {
 }
 
 export default function Picker() {
+  const dispatch = useDispatch();
   const [colors, setColors] = React.useState(BUTTON_COLORS.map(_ => false));
   const [countSelected, setCountSelected] = React.useState(0);
 
@@ -44,6 +47,13 @@ export default function Picker() {
       }
       newCountSelected += (newColors[i]) ? 1 : 0
     }
+    let combination = "";
+    for (let i = 0; i < 8; ++i) {
+      if (newColors[i]) combination += i;
+    }
+    if (combination.length === 2)
+      dispatch(setCombination(combination));
+
     setColors(newColors);
     setCountSelected(newCountSelected);
   }

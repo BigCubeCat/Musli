@@ -31,7 +31,7 @@ const useAudio = url => {
 };
 
 
-export default function Player({ url = "http://127.0.0.1:8080/tr.mp3" }) {
+export default function Player({ url = "http://127.0.0.1:5000/tr.mp3" }) {
   const [playing, toggle, setVolume, setTime, audio] = useAudio(url);
   const [volume, setWidgetVolume] = useState(100);
   const [timePercent, setTimePercent] = useState(90);
