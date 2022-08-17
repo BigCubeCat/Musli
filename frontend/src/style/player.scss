@@ -37,8 +37,10 @@ footer {
   display:flex;
   flex-direction: column;
   justify-content: center;
+  min-width: 100px;
   .Text {
-    color: rgb(100, 100, 100);
+    margin-top: 10px;
+    color: $dark-submain;
   }
 }
 

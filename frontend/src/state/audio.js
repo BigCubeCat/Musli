@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  currentAudio: new Audio(),
+  currentAudio: { source: 'tr.mp3' },
+  audioSource: new Audio(),
   audioList: [],
   combination: null,
 }
@@ -19,12 +20,15 @@ export const audioSlice = createSlice({
     },
     setCombination: (state, action) => {
       state.combination = action.payload;
+    },
+    setAudioSource: (state, action) => {
+      state.audioSource = action.payload;
     }
   }
 })
 
 export const {
-  setList, setById, setCombination
+  setList, setById, setCombination, setAudioSource
 } = audioSlice.actions;
 
 export default audioSlice.reducer

@@ -20,7 +20,6 @@ export default function Progress({ setCurrentTime, audio }) {
       clearInterval(interval);
     };
   }, []);
-  console.log(timePercent)
   return (
     <div className="Progress">
       <div className="Value" style={{ width: timePercent + "%" }} />
